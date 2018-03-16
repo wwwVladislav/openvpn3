@@ -247,7 +247,7 @@ namespace openvpn {
     return render_hex(buf, sizeof(T), caps);
   }
 
-  std::string render_hex_number(unsigned char uc, const bool caps=false)
+  inline std::string render_hex_number(unsigned char uc, const bool caps=false)
   {
     RenderHexByte b(uc, caps);
     return std::string(b.str2(), 2);
