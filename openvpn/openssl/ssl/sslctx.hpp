@@ -1478,10 +1478,18 @@ namespace openvpn {
     ExternalPKIImpl* epki;
   };
 
+  #define OPENVPN_MACRO_EXPAND1(VAL)  VAL ## 1
+  #define OPENVPN_MACRO_EXPAND(VAL)   OPENVPN_MACRO_EXPAND1(VAL)
+
+#if (OPENVPN_MACRO_EXPAND(OPENVPN_EXTERN) == 1)
   int OpenSSLContext::SSL::mydata_index = -1;
 
   SSL_METHOD OpenSSLContext::SSL::ssl23_method_client_;
   SSL_METHOD OpenSSLContext::SSL::ssl23_method_server_;
+#endif
+
+  #undef OPENVPN_MACRO_EXPAND1
+  #undef OPENVPN_MACRO_EXPAND
 }
 
 #endif

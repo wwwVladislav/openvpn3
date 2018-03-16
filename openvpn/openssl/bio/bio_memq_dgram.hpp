@@ -201,26 +201,25 @@ namespace openvpn {
 	const int ret = memq_write (b, str, len);
 	return ret;
       }
-
-      BIO_METHOD memq_method =
-	{
-	  BIO_TYPE_MEMQ,
-	  "datagram memory queue",
-	  memq_write,
-	  memq_read,
-	  memq_puts,
-	  nullptr, /* memq_gets */
-	  memq_ctrl,
-	  memq_new,
-	  memq_free,
-	  nullptr,
-	};
-
     } // namespace bio_memq_internal
 
     inline BIO_METHOD *BIO_s_memq(void)
     {
-      return (&bio_memq_internal::memq_method);
+      static BIO_METHOD memq_method =
+	{
+	  bio_memq_internal::BIO_TYPE_MEMQ,
+	  "datagram memory queue",
+	  bio_memq_internal::memq_write,
+	  bio_memq_internal::memq_read,
+	  bio_memq_internal::memq_puts,
+	  nullptr, /* memq_gets */
+	  bio_memq_internal::memq_ctrl,
+	  bio_memq_internal::memq_new,
+	  bio_memq_internal::memq_free,
+	  nullptr,
+	};
+
+      return &memq_method;
     }
 
     inline MemQ *memq_from_bio(BIO *b)
